@@ -14,15 +14,15 @@ public class Author {
     private String firstName;
 
     @Column(name = "second_name")
-    private String secondNamme;
+    private String secondName;
 
     @Column(name = "country")
     private String country;
 
-    public Author(Long id, String firstName, String secondNamme, String country) {
+    public Author(Long id, String firstName, String secondName, String country) {
         this.id = id;
         this.firstName = firstName;
-        this.secondNamme = secondNamme;
+        this.secondName = secondName;
         this.country = country;
     }
 
@@ -45,12 +45,12 @@ public class Author {
         this.firstName = firstName;
     }
 
-    public String getSecondNamme() {
-        return secondNamme;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setSecondNamme(String secondNamme) {
-        this.secondNamme = secondNamme;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     public String getCountry() {
