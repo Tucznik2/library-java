@@ -17,23 +17,24 @@ public class AuthorController {
         this.authorRepository = authorRepository;
     }
 
-    public ResponseEntity<List<Author>> getAllAuthors(){
+    @GetMapping
+    public ResponseEntity<List<Author>> getAllAuthors() {
         List<Author> authors = authorRepository.findAll();
         return ResponseEntity.ok(authors);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Author>> getAuthorById(@PathVariable Long id){
+    public ResponseEntity<Optional<Author>> getAuthorById(@PathVariable Long id) {
         Optional<Author> author = authorRepository.findById(id);
-        if(author.isPresent()){
+        if (author.isPresent()) {
             return ResponseEntity.ok(author);
         }
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<Author> createAuthor(@RequestBody Author author){
-        if(author.getId() == null || author.getCountry() == null || author.getFirstName() == null || author.getSecondName() == null){
+    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
+        if (author.getCountry() == null || author.getFirstName() == null || author.getSecondName() == null) {
             return ResponseEntity.badRequest().build();
         }
         Author createdAuthor;
@@ -41,10 +42,10 @@ public class AuthorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAuthor);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author author){
+    @PutMapping("/{id}")
+    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author author) {
         Optional<Author> authorData = authorRepository.findById(id);
-        if (authorData.isEmpty()){
+        if (authorData.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Author authorToUpdate = authorData.get();
@@ -56,9 +57,9 @@ public class AuthorController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteAuthor(@PathVariable Long id){
+    public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) {
         Optional<Author> authorToDelete = authorRepository.findById(id);
-        if(authorToDelete.isPresent()){
+        if (authorToDelete.isPresent()) {
             authorRepository.deleteById(id);
             return ResponseEntity.ok().build();
         }

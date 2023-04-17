@@ -10,15 +10,15 @@ public class Person {
     private Long id;
 
     @Column(name = "first_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "second_name")
-    private String second_name;
+    private String secondName;
 
-    public Person(Long id, String first_name, String second_name) {
+    public Person(Long id, String firstName, String secondName) {
         this.id = id;
-        this.first_name = first_name;
-        this.second_name = second_name;
+        this.firstName = firstName;
+        this.secondName = secondName;
     }
 
     public Person() {
@@ -32,19 +32,19 @@ public class Person {
         this.id = id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSecond_name() {
-        return second_name;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setSecond_name(String second_name) {
-        this.second_name = second_name;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 }
