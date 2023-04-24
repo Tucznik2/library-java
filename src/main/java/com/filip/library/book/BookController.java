@@ -35,10 +35,9 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
         if (book.getId() == null || book.getTitle() == null || book.getAuthors() == null || book.getIsbn() == null || book.getPublished_date() == null) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(book);
         }
-        Book createdBook;
-        createdBook = bookRepository.save(book);
+        Book createdBook = BookService.saveBook(book);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
     }
 
