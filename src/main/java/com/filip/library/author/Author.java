@@ -1,9 +1,13 @@
 package com.filip.library.author;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.filip.library.book.Book;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-@Table(name = "authors")
 public class Author {
 
     @Id
@@ -18,15 +22,19 @@ public class Author {
 
     @Column(name = "country")
     private String country;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books = new HashSet<>();
 
-    public Author(Long id, String firstName, String secondName, String country) {
+    public Author() {
+    }
+
+    public Author(Long id, String firstName, String secondName, String country, Set<Book> books) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.country = country;
-    }
-
-    public Author() {
+        this.books = books;
     }
 
     public Long getId() {
@@ -59,5 +67,13 @@ public class Author {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 }

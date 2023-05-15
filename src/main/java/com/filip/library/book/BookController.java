@@ -1,5 +1,6 @@
 package com.filip.library.book;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +12,10 @@ import java.util.Optional;
 @RequestMapping("/books")
 public class BookController {
 
-    private final BookRepository bookRepository;
-
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    @Autowired
+    private BookService bookService;
+    @Autowired
+    private BookRepository bookRepository;
 
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
@@ -33,12 +33,8 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
-        if (book.getId() == null || book.getTitle() == null || book.getAuthors() == null || book.getIsbn() == null || book.getPublished_date() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        Book createdBook;
-        createdBook = bookRepository.save(book);
+    public ResponseEntity<Book> createBook(@RequestBody BookRequest book) {
+        Book createdBook = bookService.saveBook(book);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
     }
 
