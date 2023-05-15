@@ -3,11 +3,11 @@ package com.filip.library.book;
 import com.filip.library.author.Author;
 import jakarta.persistence.*;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,26 +18,27 @@ public class Book {
 
     @ManyToMany
     @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private List<Author> authors;
+    Set<Author> authors = new HashSet<>();
 
     @Column(name = "isbn")
     private String isbn;
 
     @Column(name = "published_date")
-    private Date published_date;
+    private LocalDate published_date;
 
     @Column(name = "available")
     private boolean available;
 
-    public Book(String title, List<Author> authors, String isbn, Date published_date, boolean available) {
+    public Book() {
+    }
+
+    public Book(Long id, String title, Set<Author> authors, String isbn, LocalDate published_date, boolean available) {
+        this.id = id;
         this.title = title;
         this.authors = authors;
         this.isbn = isbn;
         this.published_date = published_date;
         this.available = available;
-    }
-
-    public Book() {
     }
 
     public Long getId() {
@@ -56,11 +57,11 @@ public class Book {
         this.title = title;
     }
 
-    public List<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 
@@ -72,11 +73,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public Date getPublished_date() {
+    public LocalDate getPublished_date() {
         return published_date;
     }
 
-    public void setPublished_date(Date published_date) {
+    public void setPublished_date(LocalDate published_date) {
         this.published_date = published_date;
     }
 
