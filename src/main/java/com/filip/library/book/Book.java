@@ -29,8 +29,7 @@ public class Book {
     @Column(name = "available")
     private boolean available;
 
-    public Book(Long id, String title, List<Author> authors, String isbn, Date published_date, boolean available) {
-        this.id = id;
+    public Book(String title, List<Author> authors, String isbn, Date published_date, boolean available) {
         this.title = title;
         this.authors = authors;
         this.isbn = isbn;
