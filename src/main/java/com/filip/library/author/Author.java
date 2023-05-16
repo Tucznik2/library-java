@@ -1,32 +1,37 @@
 package com.filip.library.author;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.filip.library.book.Book;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-@Table(name = "authors")
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "second_name")
-    private String secondNamme;
+    private String secondName;
 
-    @Column(name = "country")
     private String country;
-
-    public Author(Long id, String firstName, String secondNamme, String country) {
-        this.id = id;
-        this.firstName = firstName;
-        this.secondNamme = secondNamme;
-        this.country = country;
-    }
+    @JsonIgnore
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books = new HashSet<>();
 
     public Author() {
+    }
+
+    public Author(Long id, String firstName, String secondName, String country, Set<Book> books) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.country = country;
+        this.books = books;
     }
 
     public Long getId() {
@@ -45,12 +50,12 @@ public class Author {
         this.firstName = firstName;
     }
 
-    public String getSecondNamme() {
-        return secondNamme;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setSecondNamme(String secondNamme) {
-        this.secondNamme = secondNamme;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     public String getCountry() {
@@ -59,5 +64,13 @@ public class Author {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 }

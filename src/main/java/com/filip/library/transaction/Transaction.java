@@ -4,10 +4,9 @@ import com.filip.library.book.Book;
 import com.filip.library.person.Person;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "transactions")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,18 +14,75 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "id")
-    private Book book_id;
+    private Book book;
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
-    private Person person_id;
+    private Person person;
 
-    @Column(name = "checkout_date")
-    private Date checkout_date;
+    private LocalDate checkoutDate;
 
-    @Column(name = "due_date")
-    private Date due_date;
+    private LocalDate dueDate;
 
-    @Column(name = "return_date")
-    private Date return_date;
+    private LocalDate returnDate;
+
+    public Transaction(Long id, Book book, Person person, LocalDate checkoutDate, LocalDate dueDate, LocalDate returnDate) {
+        this.id = id;
+        this.book = book;
+        this.person = person;
+        this.checkoutDate = checkoutDate;
+        this.dueDate = dueDate;
+        this.returnDate = returnDate;
+    }
+
+    public Transaction() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public LocalDate getCheckoutDate() {
+        return checkoutDate;
+    }
+
+    public void setCheckoutDate(LocalDate checkoutDate) {
+        this.checkoutDate = checkoutDate;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
 }
