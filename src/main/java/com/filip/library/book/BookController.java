@@ -12,17 +12,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/books")
 public class BookController {
-
-    @Autowired
-    private BookService bookService;
     @Autowired
     private BookRepository bookRepository;
     @Autowired
+    private BookService bookService;
+    @Autowired
     private AuthorRepository authorRepository;
-
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> books = bookRepository.findAll();
