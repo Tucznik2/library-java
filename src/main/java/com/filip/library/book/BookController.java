@@ -1,12 +1,16 @@
 package com.filip.library.book;
 
+import com.filip.library.author.Author;
+import com.filip.library.author.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/books")
@@ -16,6 +20,8 @@ public class BookController {
     private BookService bookService;
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
@@ -39,16 +45,22 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
+    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody BookRequest book) {
         Optional<Book> bookData = bookRepository.findById(id);
         if (bookData.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Book bookToUpdate = bookData.get();
         bookToUpdate.setTitle(book.getTitle());
-        bookToUpdate.setAuthors(book.getAuthors());
+        Set<Author> authorSet = new HashSet<>();
+        for (Long authorId:
+                book.getAuthorsId()) {
+            Author author = authorRepository.findById(authorId).get();
+            authorSet.add(author);
+        }
+        bookToUpdate.setAuthors(authorSet);
         bookToUpdate.setIsbn(book.getIsbn());
-        bookToUpdate.setPublished_date(book.getPublished_date());
+        bookToUpdate.setPublishedDate(book.getPublishedDate());
         Book updatedbook = bookRepository.save(bookToUpdate);
         return ResponseEntity.ok(updatedbook);
     }

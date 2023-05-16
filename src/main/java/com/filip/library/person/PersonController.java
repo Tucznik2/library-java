@@ -1,5 +1,6 @@
 package com.filip.library.person;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +11,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/people")
 public class PersonController {
-
-    private final PersonRepository personRepository;
-
-    public PersonController(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
+    @Autowired
+    private PersonRepository personRepository;
 
     @GetMapping
     public ResponseEntity<List<Person>> getAllAuthors() {

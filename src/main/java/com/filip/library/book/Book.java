@@ -13,32 +13,28 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
     private String title;
 
     @ManyToMany
     @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     Set<Author> authors = new HashSet<>();
 
-    @Column(name = "isbn")
     private String isbn;
 
-    @Column(name = "published_date")
-    private LocalDate published_date;
+    private LocalDate publishedDate;
 
-    @Column(name = "available")
     private boolean available;
 
-    public Book() {
-    }
-
-    public Book(Long id, String title, Set<Author> authors, String isbn, LocalDate published_date, boolean available) {
+    public Book(Long id, String title, Set<Author> authors, String isbn, LocalDate publishedDate, boolean available) {
         this.id = id;
         this.title = title;
         this.authors = authors;
         this.isbn = isbn;
-        this.published_date = published_date;
+        this.publishedDate = publishedDate;
         this.available = available;
+    }
+
+    public Book() {
     }
 
     public Long getId() {
@@ -73,12 +69,12 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public LocalDate getPublished_date() {
-        return published_date;
+    public LocalDate getPublishedDate() {
+        return publishedDate;
     }
 
-    public void setPublished_date(LocalDate published_date) {
-        this.published_date = published_date;
+    public void setPublishedDate(LocalDate publishedDate) {
+        this.publishedDate = publishedDate;
     }
 
     public boolean isAvailable() {

@@ -3,16 +3,12 @@ package com.filip.library.person;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "people")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "second_name")
     private String secondName;
 
     public Person(Long id, String firstName, String secondName) {

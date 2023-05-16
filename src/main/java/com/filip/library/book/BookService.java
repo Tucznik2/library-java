@@ -19,7 +19,7 @@ public class BookService {
         Book newBook = new Book();
         newBook.setTitle(book.getTitle());
         newBook.setAvailable(true);
-        newBook.setPublished_date(book.getPublishedDate());
+        newBook.setPublishedDate(book.getPublishedDate());
         newBook.setIsbn(book.getIsbn());
         Set<Author> authorSet = new HashSet<>();
         for (Long id:
