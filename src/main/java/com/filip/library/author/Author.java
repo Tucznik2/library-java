@@ -20,7 +20,7 @@ public class Author {
 
     private String country;
     @JsonIgnore
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors", cascade = {CascadeType.DETACH, CascadeType.REFRESH})
     private Set<Book> books = new HashSet<>();
 
     public Author() {

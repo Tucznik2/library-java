@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -23,30 +24,30 @@ public class TransactionController {
     private PersonRepository personRepository;
 
     @GetMapping
-    public ResponseEntity<List<Transaction>> getAllTransactions(){
+    public ResponseEntity<List<Transaction>> getAllTransactions() {
         List<Transaction> transactions = transactionRepository.findAll();
         return ResponseEntity.ok(transactions);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Transaction>> getTransactionById(@PathVariable Long id){
+    public ResponseEntity<Optional<Transaction>> getTransactionById(@PathVariable Long id) {
         Optional<Transaction> transaction = transactionRepository.findById(id);
-        if(transaction.isPresent()){
+        if (transaction.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionRequest transactionRequest){
+    public ResponseEntity<Transaction> createTransaction(@RequestBody TransactionRequest transactionRequest) {
         Transaction createdTransaction = transactionService.saveTransaction(transactionRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTransaction);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody TransactionRequest transactionRequest){
+    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody TransactionRequest transactionRequest) {
         Optional<Transaction> transactionData = transactionRepository.findById(id);
-        if(transactionData.isEmpty()){
+        if (transactionData.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Transaction transactionToUpdate = transactionData.get();

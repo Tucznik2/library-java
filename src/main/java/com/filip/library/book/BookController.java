@@ -22,6 +22,7 @@ public class BookController {
     private BookService bookService;
     @Autowired
     private AuthorRepository authorRepository;
+
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> books = bookRepository.findAll();
@@ -52,7 +53,7 @@ public class BookController {
         Book bookToUpdate = bookData.get();
         bookToUpdate.setTitle(book.getTitle());
         Set<Author> authorSet = new HashSet<>();
-        for (Long authorId:
+        for (Long authorId :
                 book.getAuthorsId()) {
             Author author = authorRepository.findById(authorId).get();
             authorSet.add(author);
@@ -60,6 +61,7 @@ public class BookController {
         bookToUpdate.setAuthors(authorSet);
         bookToUpdate.setIsbn(book.getIsbn());
         bookToUpdate.setPublishedDate(book.getPublishedDate());
+        bookToUpdate.setAvailable(book.isAvailable());
         Book updatedbook = bookRepository.save(bookToUpdate);
         return ResponseEntity.ok(updatedbook);
     }
