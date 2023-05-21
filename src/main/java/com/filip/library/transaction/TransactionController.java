@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://127.0.0.1:5173")
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
@@ -33,7 +32,7 @@ public class TransactionController {
     public ResponseEntity<Optional<Transaction>> getTransactionById(@PathVariable Long id) {
         Optional<Transaction> transaction = transactionRepository.findById(id);
         if (transaction.isPresent()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok(transaction);
         }
         return ResponseEntity.notFound().build();
     }
@@ -58,5 +57,14 @@ public class TransactionController {
         transactionToUpdate.setReturnDate(transactionRequest.getReturnDate());
         Transaction updatedTransaction = transactionRepository.save(transactionToUpdate);
         return ResponseEntity.ok(updatedTransaction);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {
+        Optional<Transaction> transactionToDelete = transactionRepository.findById(id);
+        if (transactionToDelete.isPresent()) {
+            transactionRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
