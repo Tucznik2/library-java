@@ -75,4 +75,10 @@ public class BookController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/available")
+    public ResponseEntity<List<Book>> getAvailableBooks(){
+        List<Book> availableBooks = bookRepository.findByAvailableTrue();
+        return ResponseEntity.ok(availableBooks);
+    }
 }
