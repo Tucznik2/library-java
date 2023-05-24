@@ -55,8 +55,11 @@ public class BookController {
         Set<Author> authorSet = new HashSet<>();
         for (Long authorId :
                 book.getAuthorsId()) {
-            Author author = authorRepository.findById(authorId).get();
-            authorSet.add(author);
+            Optional<Author> author = authorRepository.findById(authorId);
+            if(author.isEmpty()){
+                return ResponseEntity.notFound().build();
+            }
+            authorSet.add(author.get());
         }
         bookToUpdate.setAuthors(authorSet);
         bookToUpdate.setIsbn(book.getIsbn());

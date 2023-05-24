@@ -18,7 +18,7 @@ public class BookService {
     public Book saveBook(BookRequest book){
         Book newBook = new Book();
         newBook.setTitle(book.getTitle());
-        newBook.setAvailable(true);
+        newBook.setAvailable(book.isAvailable());
         newBook.setPublishedDate(book.getPublishedDate());
         newBook.setIsbn(book.getIsbn());
         Set<Author> authorSet = new HashSet<>();
